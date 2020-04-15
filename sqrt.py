@@ -18,6 +18,7 @@ def sqrt(x):
         return average(guess, x/guess)
     def test(guess):
         return approx_eq(square(guess), x)
+    """iter_improve() was applied to deal with two closures"""
     guess = iter_improve(update, test, guess = 1)
     return guess
 

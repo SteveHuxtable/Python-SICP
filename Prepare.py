@@ -40,7 +40,6 @@ def try_illustrate(a, b):
     """
     print(a + b)
 
-help(try_illustrate)
 try_illustrate(1, 3)
 
 def absolute_value(a):
@@ -96,35 +95,31 @@ def sum_cubes(n):
     return summation(n, cube, successor)
 sum_cubes(3)
 
-def iter_improve(update, test, guess = 1):
-    while not test(guess):
-        guess = update(guess)
-    return guess
+def f(x):
+    return (x * x)
 
-def near(x, f, g):
-    return approx_eq(f(x), g(x))
+def g(x):
+    return (x + 2)
 
-def approx_eq(x, y, tolerance = 1e-5):
-    return abs(x - y) < tolerance
+def composite1(f, g):
+    def h(x):
+        return f(g(x))
+    return h
 
-def golden_update(guess):
-    return 1/guess + 1
+f_g = composite1(f, g)
 
-def golden_test(guess):
-    return near(guess, square, successor)
+compose2 = lambda f, g: lambda x: f(g(x))
 
-iter_improve(golden_update, golden_test)
+f_g_2 = compose2(f, g)
 
-def average(a, b):
-    return (a + b)/2
+def trace1(fn):
+    def wrapped(x):
+        print('-> ', fn, '(', x, ')')
+        return fn(x)
+    return wrapped 
 
-average(1, 2)
+@trace1
+def triple(x):
+    return 3 * x
 
-def square_root(x):
-    def update(guess):
-        return average(guess, x/guess)
-    def test(guess):
-        return approx_eq(square(guess), x)
-    return iter_improve(update, test)
-
-square_root(9)
+triple(3)
