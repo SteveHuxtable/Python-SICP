@@ -156,3 +156,68 @@ def iseven(x):
 nums = [1, 2, 3, 4, 5, 6, 7, 8]
 print(tuple(filter(iseven, nums)))
 print(sum(nums))
+
+test_list = tuple('Space between words'.split())
+
+def iscap(s):
+    return len(s) > 0 and s[0].isupper()
+
+print(tuple(map(iscap, test_list)))
+
+def sum_even_fibs(n):
+    return sum(fib(k) for k in range(1, n+1) if fib(k) % 2 == 0)
+
+from functools import reduce
+def product_even_fibs(n):
+    return reduce(mul, filter(iseven, map(fib, range(2, n+1))))
+
+def make_withdraw(balance):
+    '''this is a closure'''
+    def withdraw(amount):
+        nonlocal balance
+        if amount > balance:
+            return 'Insufficient funds'
+        balance = balance - amount
+        return balance
+    return withdraw
+
+hudayu = make_withdraw(10000)
+print(hudayu(1000))
+hudayu2 = hudayu
+print(hudayu2(1))
+
+first_list = [1, 2, 3, 4]
+second_list = first_list
+first_list.pop()
+third_list = list(second_list)
+
+second_list is third_list
+second_list == third_list
+first_list is second_list
+
+numerals = {'I' : 1.0, 'V' : 5, 'H' : 10}
+print(numerals['I'])
+print(type(numerals))
+
+def make_dict():
+    records = []
+    def getitem(key):
+        for k, v in records:
+            if k == key:
+                return v
+    def setitem(key, value):
+        for item in records:
+            if item[0] == key:
+                item[1] = value
+                return
+        records.append([key, value])
+    def dispatch(message, key=None, value=None):
+        if message == 'getitem':
+            return getitem(key)
+        elif message == 'setitem':
+            setitem(key, value)
+        elif message == 'keys':
+            return tuple(k for k, _ in records)
+        elif message == 'values':
+            return tuple(v for _, v in records)
+    return dispatch
