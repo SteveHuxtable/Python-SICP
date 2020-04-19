@@ -40,3 +40,37 @@ class Range:
                 raise IndexError('index out of range')
             
             return self._start + k * self._step
+
+class Progression:
+
+    def __init__(self, start=0):
+        self._current = start
+    
+    def _advance(self):
+        self._current += 1
+    
+    def __next__(self):
+        if self._current is None:
+            raise StopIteration()
+        else:
+            answer = self._current
+            self._advance()
+            return answer
+
+    def __iter__(self):
+        return self
+
+    def print_progression(self, n):
+        print(' '.join(str(next(self) for j in range(n)))) # ???
+
+import copy
+test_list = [1, 2, 3, 4, 5, 6]
+test_list_copy = copy.copy(test_list)
+test_list_deepcopy = copy.deepcopy(test_list)
+
+import copy
+origin = [1, 2, [3, 4]]
+#origin 里边有三个元素：1， 2，[3, 4]
+cop1 = copy.copy(origin)
+cop2 = copy.deepcopy(origin)
+origin[2][0] = "hey!"
